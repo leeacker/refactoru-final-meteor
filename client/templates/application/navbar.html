@@ -1,0 +1,20 @@
+<template name='navbar'>
+	<!-- <div class="container"> -->
+		<nav class="navbar-fixed-top" role='navigation'>
+			 <a class="navbar-brand" href="#">shelf ninja</a>
+			<ul class="nav nav-pills navbar-right navigation">
+				<!-- {{if ! user}} -->
+				<li  class=""><a href="#" id='home-link'>home</a></li>
+				<li  class=''><a href="#" id='about-link'>what is shelf ninja?</a></li>
+				{{> loginButtons}}
+				<!-- {{/if}} -->
+				<!-- {{if user}} -->
+				<li  class=""><a href="#" id='profile-link'>profile</a></li>
+				<li  class=''><a href="#" id='books-link'>my books</a></li>
+				<li class=''><a href="#" id='logout-nav'>log out</a></li>
+				<!-- {{/if}} -->
+			</ul>
+		</nav>
+		
+	<!-- </div>	 -->
+</template>

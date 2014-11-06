@@ -1,0 +1,23 @@
+.jumbotron{
+	background-image: url('http://fc06.deviantart.net/fs70/i/2011/010/9/c/old_books_by_capricorn7769-d36wdpt.jpg');
+	background-size: cover;
+    background-repeat: no-repeat;
+    top: 0;
+    left: 0;
+    width: 100vw;
+	height: 100vh;
+	position: absolute;
+}
+.overlay {
+	/*background-color: rgba(155, 255, 203, 0.7);*/
+	background-color: rgba(0, 0, 0, 0.8);
+	/*background-color: #819494;*/
+	z-index: 999;
+	/*opacity: 70%;*/
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+	position: absolute;
+
+}
