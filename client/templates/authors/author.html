@@ -1,0 +1,12 @@
+<template name='authorProfile'>
+	<div class="row">
+		{{#each authors}}
+			<div class="col-md-8 col-md-offset-2 text-center book-profile">
+				<img class='img-responsive' src="{{imgL}}" alt="{{name}}" >
+				<h1>{{name}}</h1>
+				<p class="lead">{{{description}}}</p>
+				<!-- <a class='btn btn-info' href="{{amazonLink}}" target='blank'>Purchase</a> -->
+			</div>
+		{{/each}}
+	</div>
+</template>

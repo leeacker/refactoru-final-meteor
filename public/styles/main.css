@@ -1,5 +1,5 @@
 .jumbotron{
-	background-image: url('http://fc06.deviantart.net/fs70/i/2011/010/9/c/old_books_by_capricorn7769-d36wdpt.jpg');
+	background-image: url('/images/books.jpg');
 	background-size: cover;
     background-repeat: no-repeat;
     top: 0;
@@ -20,4 +20,26 @@
 	left: 0;
 	position: absolute;
 
+}
+.book-profile{
+	padding: 20px;
+}
+
+.img-responsive {
+    margin: 0 auto;
+    box-shadow: 15px 15px 15px black;
+}
+#login-buttons a {
+	text-decoration: none;
+}
+
+#main{
+	padding-top: 60px;
+}
+.header-div {
+	top: 40%;
+	position: relative;
+}
+iframe {
+	width: 100%;
 }

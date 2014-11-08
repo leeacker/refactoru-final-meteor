@@ -15,4 +15,6 @@ meteorhacks:npm
 npm-container
 less
 nemo64:bootstrap
+http
+jparker:gravatar
 

@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "alchemy-api": {
+      "version": "1.0.2"
+    },
     "apac": {
       "version": "0.0.14",
       "dependencies": {
