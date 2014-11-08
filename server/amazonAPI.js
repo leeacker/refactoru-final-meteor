@@ -5,7 +5,7 @@ var Future = Npm.require('fibers/future');
 var opHelper = new OperationHelper({
     awsId:     'AKIAJSAGO3J4J6URKBGQ',
     awsSecret: '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',
-    assocId:   'shenin-20'
+    assocId:   ''
     // xml2jsOptions: an extra, optional, parameter for if you want to pass additional options for the xml2js module. (see https://github.com/Leonidas-from-XIV/node-xml2js#options)
 });
 
