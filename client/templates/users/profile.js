@@ -33,37 +33,37 @@ Template.userProfile.helpers({
 
 		var thisUser = Meteor.user();
 		var thisID = thisUser._id;
-
-		var name = thisUser.profile.name || 'Book Worm'
 		var user = Meteor.users.findOne({_id: thisID});
-		Meteor.users.update({_id: thisID}, {$set: {'profile.name': name}});
-		console.log(user);
-		
-		return Meteor.user();
-	},
-	image: function(){
-		if(!Meteor.user()){
-			return;
-		}
-		
+		var thisEmail = user.emails[0].address;
 
-		var thisUser = Meteor.user();
-		console.log(thisUser);
-		var thisID = thisUser._id;
-		console.log(thisID);
-		
-
-		if(!(thisUser.profile.img)){
-		var thisEmail = thisUser.emails[0].address;
-			console.log(thisEmail);
+		if(user.profile){
+			return user;
+		} else {
+			user.profile = {
+				name: 'Book Worm',
+				books: []
+			};
 			Meteor.call('getIMG', thisEmail, thisID);
-			return  thisUser.profile.img || 'images/defaultAvatar.jpg';
-		} else if(thisUser.profile.img){
-			return thisUser.profile.img;
+			return user;
 		}
 	},
-	bookItemTitle: function(id){
-		var thisBook = Books.findOne({_id: id});
+	// image: function(){
+	// 	if(!Meteor.user()){
+	// 		return;
+	// 	}
+	
+	// 	var thisUserObj = Meteor.user();
+	// 	console.log(thisUserObj);
+	// 	var thisID = thisUserObj._id;
+	// 	console.log(thisID);
+	// 	var thisUser = Meteor.users.findOne({"_id": thisID});
+
+	// 	console.log(thisUser);
+
+
+	// },
+	bookItemTitle: function(ID){
+		var thisBook = Books.findOne({"_id": ID});
 		return thisBook;
 	}
 		

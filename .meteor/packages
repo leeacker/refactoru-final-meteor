@@ -8,7 +8,6 @@ autopublish
 insecure
 underscore
 iron:router
-accounts-ui
 accounts-password
 meteorhacks:npm
 
@@ -17,4 +16,11 @@ less
 nemo64:bootstrap
 http
 jparker:gravatar
+aldeed:collection2
+richsilv:owl-carousel
+accounts-base
+accounts-google
+accounts-ui
+google
+oauth
 

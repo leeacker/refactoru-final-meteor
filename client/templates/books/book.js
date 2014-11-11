@@ -1,11 +1,35 @@
 Template.bookProfile.helpers({
 	books: function(){
-
 		var ASIN = Session.get('currentASIN');
-		var books = Books.find({ASIN: ASIN});
+		var thisBook = Books.find({"ASIN": ASIN});
+		console.log('this book: ', thisBook);
 
+		return thisBook;
+	
+	},
+	bookItemTitle: function(id){
+		var thisBook = Books.findOne({"_id": id});
+		return thisBook;
+	}
+});
+
+Template.myBooks.helpers({
+	books: function(){
+		var user = Meteor.user();
+		var books = user.profile.books;
+
+		
 		return books;
 	
+	},
+	bookItemTitle: function(id){
+		var thisBook = Books.findOne({"_id": id});
+		return thisBook;
+	}
+});
+Template.myBooks.events({
+	"click .image-link": function(){
+		Router.go('book.show', {book: this.title});
 	}
 });
 
@@ -24,18 +48,31 @@ Template.bookTag.events({
 
 Template.carouselWrapper.helpers({
 	bookItemTitle: function(id){
-		var thisBook = Books.findOne({_id: id});
+		var thisBook = Books.findOne({"_id": id});
 		return thisBook;
+	},
+
+	books: function(){
+
+		var thisID = Session.get('currentASIN');
+
+		var books = Books.findOne({"ASIN": thisID});
+		console.log('this ID: ', thisID);
+		console.log('books: ', books);
+		return Books.findOne({"ASIN": thisID});
+	
 	}
 });
 
-Template.carouselWrapper.helpers({
-	books: function(){
+Template.carouselItem.events({
+	"click .image-link": function(){
+		Router.go('book.show', {book: this.title});
+	}
+});
 
-		var ASIN = Session.get('currentASIN');
-		var books = Books.find({ASIN: ASIN});
-
-		return books.similar;
-	
+Template.carouselItemActive.helpers({
+	baseBook: function(){
+		var thisID = Session.get('currentASIN');
+		return Books.findOne({"ASIN": thisID});
 	}
 });

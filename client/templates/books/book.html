@@ -1,26 +1,54 @@
 <!-- Template for book profiles -->
 <template name='bookProfile'>
-	<div class="row">
+	<div class="row text-center">
 		{{#each books}}
-			<div class="col-md-8 col-md-offset-2 text-center book-profile">
-				<img class='img-responsive' src="{{imgL}}" alt="{{title}}" >
-				<h1>{{title}}</h1>
-				<h3>{{author}}</h3>
-				<p class="lead">{{{description}}}</p>
-				<a class='btn btn-info' href="{{amazonLink}}" target='blank'>Purchase</a>
-				
-			</div>
-			<div class="col-md-8 col-md-offset-2 text-center">
-			<iframe src="{{reviewURL}}" frameborder="0"></iframe>
-			</div>
+				<!-- <h1>{{this.title}}</h1> -->
+				<div class="col-md-8 col-md-offset-2 text-center book-profile">
+					<div class="form-group">
+						<a class='btn btn-danger btn-xs' href="/discover/{{this.ASIN}}">more like this</a>
+					</div>
+					<img class='img-responsive' src="{{this.imgL}}" alt="{{this.title}}" >
+					<h1>{{this.title}}</h1>
+					<h3>{{this.author}}</h3>
+					<p class="lead">{{{this.description}}}</p>
+					<a class='btn btn-info' href="{{this.amazonLink}}" target='blank'>Purchase</a>
+					
+				</div>
+				<div class="col-md-8 col-md-offset-2 text-center">
+				<iframe src="{{this.reviewURL}}" frameborder="0"></iframe>
+				</div>
 		{{/each}}
 	</div>
 </template>
 
+<!-- template for multiple books show -->
+<template name='myBooks'>
+	<h1>My Book Collection</h1>
+	<div class="row">
+		{{#each books}}
+			{{#with bookItemTitle this}}
+				<div class="col-md-4 text-center book-profile my-books-row">
+					<div class="form-group">
+						<a class='btn btn-danger btn-xs' href="/discover/{{this.ASIN}}">more like this</a>
+					</div>
+					<img class='img-responsive image-link' src="{{this.imgM}}" alt="{{this.title}}" >
+					<h1>{{this.title}}</h1>
+					<h3>{{this.author}}</h3>
+					<p class="lead book-description">{{{this.description}}}</p>
+					<a class='btn btn-info' href="{{this.amazonLink}}" target='blank'>Purchase</a>
+					
+				</div>
+			{{/with}}
+		{{/each}}
+	</div>
+</template>
+
+
+
 <!-- template for book tags -->
 <template name='bookTag'>
 	<div class="btn-group">
-	<a href='/books/{{title}}' class='btn btn-info btn-sm' >{{title}}</a>
+	<a href='/books/{{title}}' class='btn btn-info btn-sm'>{{title}}</a>
 	<a href="" class='btn btn-info btn-sm dropdown-toggle remove-booktag-btn' id='{{_id}}'><span>&times;</span></a>
 	</div>
 </template>
@@ -29,22 +57,23 @@
 <template name='carouselWrapper'>
 	<div id="book-carousel" class="carousel slide" data-ride="carousel">
 	  <!-- Indicators -->
-	  <ol class="carousel-indicators">
+	  <!-- <ol class="carousel-indicators">
 	    <li data-target="#book-carousel" data-slide-to="0" class="active"></li>
 	    <li data-target="#book-carousel" data-slide-to="1"></li>
 	    <li data-target="#book-carousel" data-slide-to="2"></li>
-	  </ol>
+	  </ol> -->
 
 	  <!-- Wrapper for slides -->
-	  <div class="carousel-inner" role="listbox">
-	    {{carouselItemActive}}
-	    {{#each books}}
-			{{#with bookItemTitle this}}
-	    		{{carouselItem}}
-			{{/with}}
-	    {{/each}}
-  </div>
-
+	  <div class="col-md-6 col-md-offset-3">
+		  <div class="carousel-inner carousel-div" role="listbox">
+			    {{> carouselItemActive}}
+			    {{#each books.similar}}
+					{{#with bookItemTitle this}}
+			    		{{> carouselItem}}
+					{{/with}}
+			    {{/each}}
+	  		</div>
+	</div>
   <!-- Controls -->
   <a class="left carousel-control" href="#book-carousel" role="button" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left"></span>
@@ -57,24 +86,39 @@
 </div>
 
 </template>
+<!-- <template name="carouselWrapper">
+	<div class="discover-carousel">
+
+		{{> carouselItemActive}}
+	    {{#each books}}
+			{{#with bookItemTitle this}}
+	    		{{> carouselItem}}
+			{{/with}}
+	    {{/each}}
+	 
+	</div>
+</template> -->
+
 
 <template name='carouselItemActive'>
-	<div class="item">
-      <img src="{{imgL}}" alt="{{title}}">
+	<div class="item active">
+      <img class='image-center' src="{{baseBook.imgL}}" alt="{{baseBook.title}}" >
       <div class="carousel-caption">
-        <h3>Start Here</h3>
-		<p>{{title}}</p>
+      	<div class="carousel-start-text">
+	        <h3>Start Here</h3>
+			<p>{{baseBook.title}}</p>
+		</div>	
       </div>
 	</div>
 </template>
 
 
 <template name='carouselItem'>
-	<div class="item">
-      <img src="{{imgL}}" alt="{{title}}">
-      <div class="carousel-caption">
+	<div class="item image-center">
+      <img class='image-center image-link' src="{{imgL}}" alt="{{title}}">
+      <!-- <div class="carousel-caption">
         <h3>{{title}}</h3>
 		<p>{{author}}</p>
-      </div>
+      </div> -->
 	</div>
 </template>

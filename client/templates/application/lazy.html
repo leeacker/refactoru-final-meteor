@@ -1,0 +1,52 @@
+<template name='lazy'>
+
+	<!-- {{#each books}}
+		<h1>If you liked <strong>{{this.title}}</strong> you might also like: </h1>
+		{{#each this.similar}}
+			{{#with bookItemTitle this}}
+				{{> lazyCarousel}}
+			{{/with}}
+		{{/each}}
+	{{/each}} -->
+	{{#each books}}
+		{{#with bookItemTitle this}}
+			<h3>Since you liked: <strong>{{title}}</strong></h3>
+			{{> lazyCarousel}}
+		{{/with}}
+	{{/each}}
+
+</template>
+
+<template name='lazyCarousel'>
+	<div id="{{ASIN}}-carousel" class="owl-carousel">
+		{{#each similar}}
+			{{#with bookItemTitle this}}
+			{{> lazyCarouselItem}}
+			{{/with}}
+		{{/each}}
+	</div>
+	<script>
+		$('#{{ASIN}}-carousel').owlCarousel({
+		     	
+		      // itemsCustom : [
+		      //   [0, 2],
+		      //   [450, 4],
+		      //   [600, 7],
+		      //   [700, 9],
+		      //   [1000, 12],
+		      //   [1200, 15],
+		      //   [1400, 18],
+		      //   [1600, 20]
+		      // ],
+		      navigation : true,
+		      items: 8
+		 
+		  });
+	</script>	
+</template>
+
+<template name='lazyCarouselItem'>
+	<div class="item">
+		<img src="{{imgM}}" alt="{{title}}" class='lazy-carousel-img'>
+	</div>
+</template>
