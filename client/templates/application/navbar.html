@@ -1,20 +1,27 @@
 <template name='navbar'>
 	<!-- <div class="container"> -->
 		<nav class="navbar-fixed-top" role='navigation'>
-			 <a class="navbar-brand" href="#">shelf ninja</a>
+			{{#if currentUser}}
+			 <a class="navbar-brand" href="#">shelf life</a>
+			{{/if}}
 			<ul class="nav nav-pills navbar-right navigation">
 
-				<li ><a > {{> loginButtons}} </a> </li>
-				{{> searchModalBtn}}
+				
+				
+
 				{{#if currentUser}}
-				<li  class=""><a href="/profile/{{id}}" id='profile-link'>profile</a></li>
-				<li  class=''><a href="/mybooks/{{id}}" id='books-link'>my books</a></li>
-				<!-- <li  class=''><a href="/discover/{{currentASIN}}" id='discover-link'>discover</a></li> -->
 				<li  class=''><a href="/lazy/{{id}}" id='lazy-link'>suggestions</a></li>
+				{{> searchModalBtn}}
+				
+				<li  class=''><a href="/mybooks/{{id}}" id='books-link'>library</a></li>
+				<!-- <li  class=''><a href="/discover/{{currentASIN}}" id='discover-link'>discover</a></li> -->
+				<li  class=""><a href="/profile/{{id}}" id='profile-link'>profile</a></li>
 				{{else}}
 				<li  class=""><a href="/" id='home-link'>home</a></li>
-				<li  class=''><a href="#" id='about-link'>what is shelf ninja?</a></li>
+				{{> searchModalBtn}}
 				{{/if}}
+
+				<li ><a> {{> loginButtons align="right"}} </a> </li>
 			</ul>
 		</nav>
 		

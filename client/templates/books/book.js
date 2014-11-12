@@ -10,6 +10,24 @@ Template.bookProfile.helpers({
 	bookItemTitle: function(id){
 		var thisBook = Books.findOne({"_id": id});
 		return thisBook;
+	},
+	inCollection: function(id){
+		var userID = Meteor.user()._id;
+		var user = Meteor.users.findOne({"_id": userID});
+		console.log('inCollection user: ', user);
+		if(user.profile.books.indexOf(id) === -1){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+});
+Template.bookProfile.events({
+	"click #addToLibraryBtn": function(){
+		var userID = Meteor.user()._id;
+		Meteor.users.update({"_id": userID}, {$push: {"profile.books": this._id}});
+		Router.go('profile.show', {id: userID});
 	}
 });
 
@@ -25,11 +43,26 @@ Template.myBooks.helpers({
 	bookItemTitle: function(id){
 		var thisBook = Books.findOne({"_id": id});
 		return thisBook;
+	},
+	inCollection: function(id){
+		var userID = Meteor.user()._id;
+		var user = Meteor.users.findOne({"_id": userID});
+		console.log('inCollection user: ', user);
+		if(user.profile.books.indexOf(id) === -1){
+			return true;
+		} else {
+			return false;
+		}
 	}
 });
 Template.myBooks.events({
 	"click .image-link": function(){
 		Router.go('book.show', {book: this.title});
+	},
+	"click #addToLibraryBtn": function(){
+		var userID = Meteor.user()._id;
+		Meteor.users.update({"_id": userID}, {$push : {"profile.similar": this._id}});
+		Router.go('profile.show', {id: userID});
 	}
 });
 
@@ -66,6 +99,7 @@ Template.carouselWrapper.helpers({
 
 Template.carouselItem.events({
 	"click .image-link": function(){
+		Session.set("currentASIN", this.ASIN);
 		Router.go('book.show', {book: this.title});
 	}
 });

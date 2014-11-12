@@ -8,11 +8,12 @@ Template.lazy.helpers({
 	books: function(){
 		var user = Meteor.user();
 		console.log('lazy user: ', user);
-		var suggestionNum = 10;
-		if(user.profile.books.length < 10){
-			suggestionNum = user.profile.books.length;
-		}
-		return _.sample(user.profile.books, suggestionNum);
+		// var suggestionNum = 10;
+		// if(user.profile.books.length < 10){
+		// 	suggestionNum = user.profile.books.length;
+		// }
+		// return _.sample(user.profile.books, suggestionNum);
+		return user.profile.books;
 	}
 });
 

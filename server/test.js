@@ -6,9 +6,7 @@ var Future = Npm.require('fibers/future');
 
 
 var opHelper = new OperationHelper({
-    awsId:     '',
-    awsSecret: '',
-    assocId:   ''
+
     // xml2jsOptions: an extra, optional, parameter for if you want to pass additional options for the xml2js module. (see https://github.com/Leonidas-from-XIV/node-xml2js#options)
 });
 
@@ -35,24 +33,24 @@ var opHelper = new OperationHelper({
 
 
 
-opHelper.execute('ItemSearch', {
-  'SearchIndex': 'Books',
-  'Keywords': 'into the wild',
-  'ResponseGroup': 'ItemAttributes, Reviews, Subjects'
-}, function(results) { // you can add a second parameter here to examine the raw xml response
-    // console.log(util.inspect(results.ItemSearchResponse, {depth: null}));
-    // console.log(util.inspect(results.ItemSearchResponse.Items[0].Item[0].EditorialReviews[0].EditorialReview[0].Content, {depth: null}));
-    var fut = new Future();
-    fut.return(results.ItemSearchResponse.Items[0].Item[0].CustomerReviews[0].IFrameURL[0]);
-    alchemy.sentiment(fut.wait(), {}, function(err, response) {
-	  if (err) throw err;
+// opHelper.execute('ItemSearch', {
+//   'SearchIndex': 'Books',
+//   'Keywords': 'into the wild',
+//   'ResponseGroup': 'ItemAttributes, Reviews, Subjects'
+// }, function(results) { // you can add a second parameter here to examine the raw xml response
+//     // console.log(util.inspect(results.ItemSearchResponse, {depth: null}));
+//     // console.log(util.inspect(results.ItemSearchResponse.Items[0].Item[0].EditorialReviews[0].EditorialReview[0].Content, {depth: null}));
+//     var fut = new Future();
+//     fut.return(results.ItemSearchResponse.Items[0].Item[0].CustomerReviews[0].IFrameURL[0]);
+//     alchemy.sentiment(fut.wait(), {}, function(err, response) {
+// 	  if (err) throw err;
 
-	  // See http://www.alchemyapi.com/api/concept/htmlc.html for format of returned object
-	  var concepts = response.docSentiment;
-	  console.log(concepts);
-	  // Do something with data
-	});
-});
+// 	  // See http://www.alchemyapi.com/api/concept/htmlc.html for format of returned object
+// 	  var concepts = response.docSentiment;
+// 	  console.log(concepts);
+// 	  // Do something with data
+// 	});
+// });
 
 // opHelper.execute('SimilarityLookup', {
 //   'SearchIndex': 'Books',

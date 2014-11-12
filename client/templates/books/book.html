@@ -4,9 +4,16 @@
 		{{#each books}}
 				<!-- <h1>{{this.title}}</h1> -->
 				<div class="col-md-8 col-md-offset-2 text-center book-profile">
-					<div class="form-group">
-						<a class='btn btn-danger btn-xs' href="/discover/{{this.ASIN}}">more like this</a>
-					</div>
+					<form class="form-inline book-options" role="form">
+						<div class="form-group">
+							<a class='btn btn-danger' href="/discover/{{this.ASIN}}">more like this</a>
+						</div>
+						{{#if inCollection this._id}}
+							<div class="form-group">
+								<a class='btn btn-warning' id='addToLibraryBtn' href="">add to my library</a>
+							</div>
+						{{/if}}
+					</form>
 					<img class='img-responsive' src="{{this.imgL}}" alt="{{this.title}}" >
 					<h1>{{this.title}}</h1>
 					<h3>{{this.author}}</h3>
@@ -23,14 +30,23 @@
 
 <!-- template for multiple books show -->
 <template name='myBooks'>
-	<h1>My Book Collection</h1>
+	<div class="library-header text-center">
+		<h1>Library</h1>
+	</div>	
 	<div class="row">
 		{{#each books}}
 			{{#with bookItemTitle this}}
 				<div class="col-md-4 text-center book-profile my-books-row">
-					<div class="form-group">
-						<a class='btn btn-danger btn-xs' href="/discover/{{this.ASIN}}">more like this</a>
-					</div>
+					<form class="form-inline book-options" role="form">
+						<div class="form-group">
+							<a class='btn btn-danger' href="/discover/{{this.ASIN}}">more like this</a>
+						</div>
+						{{#if inCollection this._id}}
+						<div class="form-group">
+							<a class='btn btn-warning' id='addToLibraryBtn' href="">add to my library</a>
+						</div>
+						{{/if}}
+					</form>	
 					<img class='img-responsive image-link' src="{{this.imgM}}" alt="{{this.title}}" >
 					<h1>{{this.title}}</h1>
 					<h3>{{this.author}}</h3>
@@ -46,10 +62,19 @@
 
 
 <!-- template for book tags -->
-<template name='bookTag'>
+<!-- <template name='bookTag'>
 	<div class="btn-group">
 	<a href='/books/{{title}}' class='btn btn-info btn-sm'>{{title}}</a>
 	<a href="" class='btn btn-info btn-sm dropdown-toggle remove-booktag-btn' id='{{_id}}'><span>&times;</span></a>
+	</div>
+</template> -->
+
+<template name='bookTag'>
+	<div class="book-snippet">
+		<div class="text-right"><a href="" class='remove-booktag-btn' id='{{_id}}'><span>&times;</span></a></div>
+		<a href='/books/{{title}}' class=''><h4>{{title}} </h4></a><small>{{author}}</small>
+		<h6>{{{description}}}</h6>
+	
 	</div>
 </template>
 
@@ -86,18 +111,7 @@
 </div>
 
 </template>
-<!-- <template name="carouselWrapper">
-	<div class="discover-carousel">
 
-		{{> carouselItemActive}}
-	    {{#each books}}
-			{{#with bookItemTitle this}}
-	    		{{> carouselItem}}
-			{{/with}}
-	    {{/each}}
-	 
-	</div>
-</template> -->
 
 
 <template name='carouselItemActive'>
@@ -115,7 +129,7 @@
 
 <template name='carouselItem'>
 	<div class="item image-center">
-      <img class='image-center image-link' src="{{imgL}}" alt="{{title}}">
+      <img class='image-center image-link item-img' src="{{imgL}}" alt="{{title}}">
       <!-- <div class="carousel-caption">
         <h3>{{title}}</h3>
 		<p>{{author}}</p>

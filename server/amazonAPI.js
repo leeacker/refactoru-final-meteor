@@ -1,11 +1,10 @@
 var OperationHelper = Meteor.npmRequire('apac').OperationHelper;
 var util = Meteor.npmRequire('util');
 var Future = Npm.require('fibers/future');
+var querystring = Npm.require('querystring');
 
 var opHelper = new OperationHelper({
-    awsId:     '',
-    awsSecret: '',
-    assocId:   ''
+
     // xml2jsOptions: an extra, optional, parameter for if you want to pass additional options for the xml2js module. (see https://github.com/Leonidas-from-XIV/node-xml2js#options)
 });
 
@@ -42,6 +41,10 @@ var createBookObj = function(query, callback){
 		
 						Books.insert(objectThings);
 						suggestBook(objectThings.ASIN);
+
+					googleAPI.bookSearch(objectThings.title, function(err, results){
+						googleAPI.updateExistingBook(ASIN, results)
+					});
 					    callback(null, objectThings);
 
 		}));	
@@ -94,20 +97,31 @@ var populateSimilarBooks = function(baseBook, item){
 		var reviewURL = item.CustomerReviews[0].IFrameURL[0];
 		var subjects = item.Subjects[0].Subject;
 
+
 		isBook(ASIN, function(err, results){
 			if(!results){
 				Books.insert({"imgL": imgL, "imgS": imgS, "ASIN": ASIN, "imgM": imgM, "author": author, "title": title, "amazonLink": amazonLink, "reviewURL": reviewURL, "description": description, "subjects": subjects}, function(err, records){
 					if(err){
-						console.log(err);
+						console.log("isBook err: ", err);
 					} else {
 						var newBook = Books.find({"ASIN": ASIN});
 						insertSimilar(baseBook, ASIN);
+						suggestBook(ASIN);
+
+					googleAPI.bookSearch(title, function(err, results){
+						googleAPI.updateExistingBook(ASIN, results);
+					});
 					}
 				});
 			
 			} else {
 				var newBook = Books.findOne({"ASIN": ASIN});
 				insertSimilar(baseBook, ASIN);
+				suggestBook(ASIN);
+				googleAPI.bookSearch(title, function(err, results){
+						googleAPI.updateExistingBook(ASIN, results);
+					});
+					
 			}
 		});
 };
@@ -193,7 +207,78 @@ var checkASIN = function(query, callback){
 		}));
 };
 
+////////////////////////////////////////////
+// Methods for using the Google Books API //
+////////////////////////////////////////////
 
+var googleAPI = {
+	bookSearch : function(query, callback){
+		// make options optional (teehee)
+		// if ( ! callback || typeof callback != "function") {
+  //   	// Callback is the second parameter
+  //       callback = options;
+  //       // No options
+  //       options = undefined;
+  //   	}
+    	// options defaults
+		var options = {
+			q: query,
+			key: '',
+			prettyPrint: false
+		}
+		// make a call to google books api for matching book info
+		HTTP.get('https://www.googleapis.com/books/v1/volumes?' + querystring.stringify(options), function(err, results){
+			if(err) console.log(err)
+			// console.log(util.inspect(results.data.items[0].accessInfo, {depth: null}));
+			// console.log(util.inspect(results.data.items[0].selfLink, {depth: null}));
+			// console.log(util.inspect(results.data.items[0].accessInfo.webReaderLink, {depth: null}));
+
+			var googleBook = {
+				googleLink: results.data.items[0].volumeInfo.infoLink,
+				googleAPILink: results.data.items[0].selfLink,
+				embeddable:  results.data.items[0].accessInfo.embeddable,
+				epub: {
+					isAvailable: results.data.items[0].accessInfo.epub.isAvailable,
+					link: results.data.items[0].accessInfo.epub.acsTokenLink || null
+				},
+				pdf: {
+					isAvailable: results.data.items[0].accessInfo.pdf.isAvailable,
+					link: results.data.items[0].accessInfo.pdf.acsTokenLink || null
+				},
+				webReaderLink: results.data.items[0].accessInfo.webReaderLink
+			};
+			console.log("google book: ", googleBook);
+			
+			callback(null, googleBook);
+			console.log("http callback: ", callback);
+			return googleBook
+		});
+	}, 	//end bookSearch method
+	updateExistingBook: function(ASIN, googleBookObj){
+		console.log('start update existing book: ', ASIN + ' object: '+ googleBookObj.googleLink);
+		// update given book with google attributes
+		console.log("update this book: ", Books.findOne({'ASIN': ASIN}));
+		Books.update({"ASIN": ASIN}, {$set: {
+			"googleLink": googleBookObj.googleLink,
+			"googleAPILink": googleBookObj.googleAPILink,
+			"embeddable":  googleBookObj.embeddable,
+			// "epub": googleBookObj.epub,
+			// "pdf": googleBookObj.pdf,
+			// "epub.isAvailable": googleBookObj.epub.isAvailable,
+			// "epub.link": googleBookObj.epub.link,
+			// "pdf.isAvailable": googleBookObj.pdf.isAvailable,
+			// "pdf.link": googleBookObj.pdf.link,
+			"webReaderLink": googleBookObj.webReaderLink
+		}});
+	} //end updateExistingBook method
+} //end googleAPI object
+
+// googleAPI.bookSearch('to kill a mockingbird', function(err, results){
+// 	console.log("results: ", results);
+// });
+//////////////////////////
+// Meteor Call methods  //
+//////////////////////////
 
 Meteor.methods({
 	getBook: function(title, callback){
@@ -252,8 +337,8 @@ Meteor.methods({
 	addBook: function(title, id){
 			var fut = new Future();
 			var user = Meteor.users.findOne({_id: id});
-			console.log(title);
-			console.log(id);
+			console.log("add book title: ", title);
+			console.log("add book id: ",id);
 
 			checkASIN(title, Meteor.bindEnvironment(function(ASIN, isBook){
 				console.log('start checkASIN callback ASIN: ', ASIN);

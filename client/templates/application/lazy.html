@@ -1,13 +1,5 @@
 <template name='lazy'>
 
-	<!-- {{#each books}}
-		<h1>If you liked <strong>{{this.title}}</strong> you might also like: </h1>
-		{{#each this.similar}}
-			{{#with bookItemTitle this}}
-				{{> lazyCarousel}}
-			{{/with}}
-		{{/each}}
-	{{/each}} -->
 	{{#each books}}
 		{{#with bookItemTitle this}}
 			<h3>Since you liked: <strong>{{title}}</strong></h3>
@@ -47,6 +39,6 @@
 
 <template name='lazyCarouselItem'>
 	<div class="item">
-		<img src="{{imgM}}" alt="{{title}}" class='lazy-carousel-img'>
+		<img src="{{imgM}}" alt="{{title}}" class='item-img lazy-carousel-img'>
 	</div>
 </template>

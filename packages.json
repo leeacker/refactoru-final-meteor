@@ -1,5 +1,6 @@
 {
   "apac": "0.0.14",
   "alchemy-api": "1.0.2",
-  "slick-carousel": "1.3.13"
+  "slick-carousel": "1.3.13",
+  "querystring": "0.2.0"
 }

@@ -1,21 +1,23 @@
 <template name='userProfile'>
 	
 		<div class="row">
+			<div class="text-right"><a id='editProfModalBtn' type="button" class="" data-toggle="modal" data-target="#editUser">
+					  edit profile
+					</a></div>
 				<div class="col-md-8 col-md-offset-2 text-center book-profile">
 					<img class='img-responsive' src="{{user.profile.img}}" alt="{{user.profile.name}}" >
 					<h1>{{user.profile.name}}</h1>
 					<h3>{{user.userName}}</h3>
 					<p class="lead"></p>
-					<h3 id='fav-books' class='dotted-border'><strong>Favorite Books </strong><i class="fa fa-plus-circle" id='books-i' data-toggle="modal" data-target="#bookSearchModal"></i>
-						{{#each user.profile.books}}
+					<h3 id='fav-books' class='dotted-border'><strong>Library </strong><i class="fa fa-plus-circle" id='books-i' data-toggle="modal" data-target="#bookSearchModal"></i>
+					<div id='book-display'>
+						{{#each sort user.profile.books}}
 							{{#with bookItemTitle this}}
 								{{> bookTag}}
 							{{/with}}
 						{{/each}}
+					</div>
 					</h3>
-					<button id='editProfModalBtn' type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editUser">
-					  edit profile
-					</button>
 				</div>
 		</div>
 

@@ -65,6 +65,9 @@ Template.userProfile.helpers({
 	bookItemTitle: function(ID){
 		var thisBook = Books.findOne({"_id": ID});
 		return thisBook;
+	},
+	sort: function(list){
+		return _.sortBy(list, "_id").reverse();
 	}
 		
 });
