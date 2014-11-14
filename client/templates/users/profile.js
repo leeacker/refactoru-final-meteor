@@ -21,6 +21,20 @@ Template.userProfile.events({
 		console.log('click!');
 		Session.set("searchOrAdd", "add");
 		console.log('search or add: ', Session.get("searchOrAdd"));
+	},
+	'click #noBookBtn': function(e){
+		$('#books-i').trigger('click');
+	},
+	'click .show-books': function(e){
+		e.preventDefault();
+		$('#book-display').addClass('show');
+		$('.show-books').text('Hide Books');
+		$('.show-books').addClass('showing');
+	},
+	'click .showing': function(e){
+		e.preventDefault();
+		$('#book-display').removeClass('show');
+		$('.show-books').removeClass('showing');
 	}
 });
 
@@ -68,6 +82,16 @@ Template.userProfile.helpers({
 	},
 	sort: function(list){
 		return _.sortBy(list, "_id").reverse();
+	},
+	noBooks: function(userProfile){
+		console.log('check for books: ', userProfile);
+		if(!userProfile.books){
+			console.log('there are no books');
+			return true;
+		} else {
+			console.log('there are books!');
+			return false;
+		}
 	}
 		
 });

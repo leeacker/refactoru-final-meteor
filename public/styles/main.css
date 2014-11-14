@@ -39,7 +39,14 @@ body {
 .book-profile{
 	padding: 20px;
 }
+#book-display {
+	height: 340px;
+	overflow: hidden;
+}
+#book-display.show {
+	height: 100%;
 
+}
 .img-responsive {
     margin: 0 auto;
     box-shadow: 0 0 6px rgba(0,0,0,.16),0 6px 12px rgba(0,0,0,.32);
@@ -63,9 +70,10 @@ iframe {
 	margin: 0 auto;
 }
 .carousel-start-text {
-	background-color: rgba(255, 255, 255, 0.9);
-	border: 2px solid #333;
+	/*background-color: rgba(255, 255, 255, 0.9);*/
+	/*border: 2px solid #333;*/
 	color: black;
+	font-size: 3em;
 }
 .carousel-div {
 	margin-top: 50px;
@@ -119,16 +127,33 @@ iframe {
 	text-overflow: ellipsis;
 	padding-right: 10px;
 	padding-left: 10px;
+	position: relative;
 }
-.book-snippet:hover{
+/*.book-snippet:hover{
 	background-color: rgba(0,0,0,.2);
-}
+}*/
+
 #editProfModalBtn {
 	position: fixed;
 }
 .book-options {
 	margin-bottom: 10px;
 }
-/*.home-page-text {
-	top: 250px;
-}*/
+.snippet-img {
+	width: 100%;
+}
+.snippet-background {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	position: absolute;
+	opacity: 0;
+	z-index: -4;
+}
+.book-snippet:hover .snippet-background {
+	opacity: 0.2
+}

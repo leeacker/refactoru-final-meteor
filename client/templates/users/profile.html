@@ -11,12 +11,23 @@
 					<p class="lead"></p>
 					<h3 id='fav-books' class='dotted-border'><strong>Library </strong><i class="fa fa-plus-circle" id='books-i' data-toggle="modal" data-target="#bookSearchModal"></i>
 					<div id='book-display'>
+						{{#if noBooks user.profile}}
+						<div class="book-snippet">
+							<a id='noBookBtn' class=''><h4>Add a Book</h4></a>
+							<h6>You haven't added any books to this shelf</h6>
+							<div class="snippet-background"><img src="{{imgM}}" alt="" class="snippet-img"></div>
+						</div>
+						{{/if}}
 						{{#each sort user.profile.books}}
 							{{#with bookItemTitle this}}
 								{{> bookTag}}
 							{{/with}}
 						{{/each}}
 					</div>
+					<!-- {{#if !noBooks user.profile}} -->
+					<a type="button" class="btn btn-primary show-books">Show More Books</a>
+					<!-- {{/if}} -->
+
 					</h3>
 				</div>
 		</div>

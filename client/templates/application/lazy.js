@@ -1,8 +1,8 @@
 Template.lazy.helpers({
 	bookItemTitle: function(id){
-		var thisBook = Books.findOne({"_id": id});
-		console.log("lazy id sent: ", id);
-		console.log('book item title in lazy.js: ', thisBook);
+		// var thisBook = Books.findOne({"_id": id});
+		// console.log("lazy id sent: ", id);
+		// console.log('book item title in lazy.js: ', thisBook);
 		return Books.findOne({"_id": id});
 	},
 	books: function(){
@@ -19,15 +19,16 @@ Template.lazy.helpers({
 
 Template.lazyCarousel.helpers({
 	bookItemTitle: function(id){
-		var thisBook = Books.findOne({"_id": id});
-		console.log("lazy id sent: ", id);
-		console.log('book item title in lazy.js: ', thisBook);
+		// var thisBook = Books.findOne({"_id": id});
+		// console.log("lazy id sent: ", id);
+		// console.log('book item title in lazy.js: ', thisBook);
 		return Books.findOne({"_id": id});
 	}
 });
 
 Template.lazyCarouselItem.events({
-	"click .lazy-carousel-img": function(){
+	"click .item": function(){
+		console.log('hello');
 		Router.go('book.show', {book: this.title});
 	}
 });

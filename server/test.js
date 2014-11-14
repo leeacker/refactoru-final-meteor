@@ -1,14 +1,14 @@
-var OperationHelper = Meteor.npmRequire('apac').OperationHelper;
-var util = Meteor.npmRequire('util');
-var AlchemyAPI = Meteor.npmRequire('alchemy-api');
-var alchemy = new AlchemyAPI('');
-var Future = Npm.require('fibers/future');
+// var OperationHelper = Meteor.npmRequire('apac').OperationHelper;
+// var util = Meteor.npmRequire('util');
+// var AlchemyAPI = Meteor.npmRequire('alchemy-api');
+// var alchemy = new AlchemyAPI('');
+// var Future = Npm.require('fibers/future');
 
 
-var opHelper = new OperationHelper({
+// var opHelper = new OperationHelper({
 
-    // xml2jsOptions: an extra, optional, parameter for if you want to pass additional options for the xml2js module. (see https://github.com/Leonidas-from-XIV/node-xml2js#options)
-});
+//     // xml2jsOptions: an extra, optional, parameter for if you want to pass additional options for the xml2js module. (see https://github.com/Leonidas-from-XIV/node-xml2js#options)
+// });
 
 
 

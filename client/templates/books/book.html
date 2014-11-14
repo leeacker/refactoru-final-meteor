@@ -19,6 +19,13 @@
 					<h3>{{this.author}}</h3>
 					<p class="lead">{{{this.description}}}</p>
 					<a class='btn btn-info' href="{{this.amazonLink}}" target='blank'>Purchase</a>
+					<a class='btn btn-danger' href="{{this.googleInfo.googleLink}}" target='blank'>View on Google Books</a>
+					{{#if this.googleInfo.epub.isAvailable}}
+					<a class='btn btn-warning' href="{{this.googleInfo.epub.link}}" target='blank'>Download ePub File</a>
+					{{/if}}
+					{{#if this.googleInfo.pdf.isAvailable}}
+					<a class='btn btn-warning' href="{{this.googleInfo.pdf.link}}" target='blank'>Download PDF</a>
+					{{/if}}
 					
 				</div>
 				<div class="col-md-8 col-md-offset-2 text-center">
@@ -52,7 +59,7 @@
 					<h3>{{this.author}}</h3>
 					<p class="lead book-description">{{{this.description}}}</p>
 					<a class='btn btn-info' href="{{this.amazonLink}}" target='blank'>Purchase</a>
-					
+					<a class='btn btn-danger' href="{{this.googleInfo.googleLink}}" target='blank'>View on Google Books</a>
 				</div>
 			{{/with}}
 		{{/each}}
@@ -71,10 +78,11 @@
 
 <template name='bookTag'>
 	<div class="book-snippet">
+
 		<div class="text-right"><a href="" class='remove-booktag-btn' id='{{_id}}'><span>&times;</span></a></div>
 		<a href='/books/{{title}}' class=''><h4>{{title}} </h4></a><small>{{author}}</small>
 		<h6>{{{description}}}</h6>
-	
+		<div class="snippet-background"><img src="{{imgM}}" alt="" class="snippet-img"></div>
 	</div>
 </template>
 
@@ -119,8 +127,8 @@
       <img class='image-center' src="{{baseBook.imgL}}" alt="{{baseBook.title}}" >
       <div class="carousel-caption">
       	<div class="carousel-start-text">
-	        <h3>Start Here</h3>
-			<p>{{baseBook.title}}</p>
+	       <!--  <h1>START HERE</h1>
+			<h2>{{baseBook.title}}</h2> -->
 		</div>	
       </div>
 	</div>

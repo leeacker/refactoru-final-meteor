@@ -2,7 +2,7 @@
 
 	{{#each books}}
 		{{#with bookItemTitle this}}
-			<h3>Since you liked: <strong>{{title}}</strong></h3>
+			<h3>Since you liked: <strong><a href="/books/{{title}}">{{title}}</a></strong></h3>
 			{{> lazyCarousel}}
 		{{/with}}
 	{{/each}}
@@ -31,14 +31,16 @@
 		      //   [1600, 20]
 		      // ],
 		      navigation : true,
-		      items: 8
+		      items: 8,
+		      mouseDrag: false,
+		      touchDrag: false
 		 
 		  });
 	</script>	
 </template>
 
 <template name='lazyCarouselItem'>
-	<div class="item">
+	<a class="item" href='/books/{{title}}'>
 		<img src="{{imgM}}" alt="{{title}}" class='item-img lazy-carousel-img'>
-	</div>
+	</a>
 </template>
